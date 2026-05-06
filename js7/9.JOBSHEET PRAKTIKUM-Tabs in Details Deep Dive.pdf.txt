@@ -1,0 +1,176 @@
+
+
+JOBSHEET PRAKTIKUM 
+Mata Kuliah: Pemrograman Web Lanjut 
+Pertemuan 9 – Implementasi Tabs pada Info List di Filament 
+ 
+       Capaian Pembelajaran 
+Setelah mengikuti praktikum ini, mahasiswa mampu: 
+1. Menggunakan komponen Tabs pada Info List 
+2. Mengelompokkan informasi detail ke dalam beberapa tab 
+3. Menambahkan icon dan badge pada tab 
+4. Mengubah orientasi tab (horizontal & vertical) 
+5. Mendesain halaman View agar lebih ringkas dan user-friendly 
+Framework yang digunakan: 
+Filament 
+ 
+     A. Latar Belakang 
+Pada pertemuan sebelumnya, kita telah menggunakan Info List untuk menampilkan detail Product. 
+Namun jika data cukup banyak, pengguna harus scroll panjang ke bawah. 
+Solusi: gunakan Tabs agar informasi dibagi menjadi beberapa kategori dan dapat diakses dengan klik. 
+Contoh pembagian: 
+• Tab 1 → Product Info 
+• Tab 2 → Pricing & Stock 
+• Tab 3 → Media & Status 
+ 
+     B. Konsep Tabs di Info List 
+Tabs digunakan untuk: 
+• Membagi informasi ke dalam beberapa halaman kecil 
+• Mengurangi scrolling panjang 
+• Meningkatkan user experience 
+ 
+ 
+ 
+
+     C. Mengubah Section Menjadi Tabs 
+Buka file: 
+• ProductInfolist.php 
+Ganti struktur Section menjadi Tabs. 
+ 
+     D. Implementasi Tabs 
+ 
+     Tab Product Info 
+Tabs::make('Product Tabs') 
+    ->tabs([ 
+        Tabs\Tab::make('Product Info') 
+            ->icon('heroicon-o-academic-cap') 
+            ->schema([ 
+                TextEntry::make('name') 
+                    ->label('Product Name') 
+                    ->weight('bold') 
+                    ->color('primary'), 
+ 
+                TextEntry::make('sku') 
+                    ->label('SKU') 
+                    ->badge() 
+                    ->color('success'), 
+ 
+                TextEntry::make('description') 
+                    ->label('Description'), 
+            ]) 
+            ->columnSpanFull(), 
+
+ 
+ 
+ 
+
+     Tab Pricing & Stock 
+        Tabs\Tab::make('Pricing & Stock') 
+            ->icon('heroicon-o-currency-dollar') 
+            ->badge('10') 
+            ->badgeColor('info') 
+            ->schema([ 
+                TextEntry::make('price') 
+                    ->label('Price') 
+                    ->icon('heroicon-o-currency-dollar'), 
+ 
+                TextEntry::make('stock') 
+                    ->label('Stock'), 
+            ]), 
+ 
+
+ 
+ 
+     Tab Media & Status 
+        Tabs\Tab::make('Media & Status') 
+            ->icon('heroicon-o-photo') 
+            ->schema([ 
+                ImageEntry::make('image') 
+                    ->label('Product Image') 
+                    ->disk('public'), 
+ 
+                IconEntry::make('is_active') 
+                    ->label('Active') 
+                    ->boolean(), 
+ 
+                IconEntry::make('is_featured') 
+                    ->label('Featured') 
+                    ->boolean(), 
+            ]), 
+    ]) 
+
+ 
+ 
+ 
+ 
+
+     E. Tampilan Tabs Horizontal 
+ 
+ 
+
+ 
+ 
+     F. Mengubah Tabs Menjadi Vertical 
+Tambahkan method: 
+• ->vertical() 
+Contoh: 
+• Tabs::make('Product Tabs') 
+    ->vertical() 
+ 
+
+ 
+ 
+  Tampilan Tabs Vertical 
+ 
+
+ 
+ 
+ 
+     G. Fitur Tambahan Tabs 
+Method Fungsi 
+icon() Menambahkan icon pada tab 
+badge() Menambahkan badge angka 
+
+Method Fungsi 
+badgeColor() Mengubah warna badge 
+columnSpanFull() Membuat full width 
+vertical() Mengubah orientasi tab 
+ 
+     H. Perbandingan Section vs Tabs 
+Section Tabs 
+Scroll panjang Navigasi klik 
+Semua tampil sekaligus Terpisah per kategori 
+Kurang ringkas Lebih profesional 
+ 
+     I. Hasil yang Diharapkan 
+Mahasiswa berhasil: 
+   Mengganti Section menjadi Tabs 
+   Membuat 3 Tab berbeda 
+   Menambahkan icon pada Tab 
+   Menambahkan badge 
+   Mengubah orientasi ke vertical 
+ 
+     J. Latihan Praktikum 
+1. Tambahkan badge dinamis berdasarkan jumlah stok 
+2. Tambahkan warna badge berbeda 
+3. Ubah tampilan menjadi vertical 
+4. Tambahkan icon berbeda pada tiap tab 
+5. Screenshot: 
+o Tabs horizontal 
+o Tabs vertical 
+o Tab dengan badge 
+ 
+     K. Analisis & Diskusi 
+
+1. Kapan kita menggunakan Tabs dibanding Section? 
+2. Apa kelebihan Tabs untuk data panjang? 
+3. Apakah Tabs bisa digunakan pada Form juga? 
+4. Bagaimana jika tab terlalu banyak? 
+ 
+     L. Kesimpulan 
+Pada pertemuan ini mahasiswa telah mempelajari: 
+• Penggunaan Tabs pada Info List 
+• Mengatur tampilan View Page menjadi lebih interaktif 
+• Menambahkan icon & badge 
+• Mengubah orientasi tampilan 
+ 

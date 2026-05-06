@@ -1,0 +1,245 @@
+
+
+JOBSHEET PRAKTIKUM 
+Mata Kuliah: Pemrograman Web Lanjut 
+Pertemuan 7 – Implementasi Wizard Form (Multi Step Form) di Filament 
+ 
+       Capaian Pembelajaran 
+Setelah mengikuti praktikum ini, mahasiswa mampu: 
+1. Membuat Resource Product 
+2. Menggunakan Wizard Form pada Filament 
+3. Membagi form menjadi beberapa langkah (step) 
+4. Menambahkan validasi pada setiap step 
+5. Mengatur tombol submit pada Wizard 
+6. Menampilkan data Product pada tabel 
+Framework yang digunakan: 
+Filament 
+ 
+     A. Studi Kasus 
+Dalam sistem e-commerce, form produk biasanya panjang dan kompleks. 
+Agar lebih user-friendly, form dibagi menjadi beberapa tahap: 
+• Product Info 
+•  Pricing & Stock 
+• Media & Status 
+Teknik ini disebut Wizard Form (Multi Step Form). 
+ 
+     B. Struktur Database Product 
+Contoh struktur tabel products: 
+Field Tipe 
+name string 
+sku string 
+description text 
+price integer 
+stock integer 
+
+Field Tipe 
+image string 
+is_active boolean 
+is_featured boolean 
+Pastikan model Product sudah dibuat. 
+Buat file migrate : 
+• php artisan make:migration create_products_table 
+buka file migrate product tadi  dan tambahkan code berikut 
+ 
+Jalankan migrasi 
+• php artisan migrate 
+ 
+ 
+ 
+ 
+
+cek di database 
+ 
+Setelah migrate berhasil maka langkah berikutnya membuat model 
+1. Buat File Model 
+o php artisan make:model Product 
+2. Isi File Model 
+ 
+
+ 
+     C. Membuat Resource Product 
+Jalankan: 
+• php artisan make:filament-resource Product 
+Isi: 
+• Attribute → name 
+• Generate view page → Yes 
+• Generate dari database → No 
+ 
+Refresh /admin → menu Products muncul. 
+ 
+ 
+     D. Implementasi Wizard Form 
+Buka file: 
+• ProductForm.php 
+ 
+     Step 1 – Product Info 
+Wizard::make([ 
+    Step::make('Product Info') 
+        ->description('Isi informasi dasar produk') 
+        ->schema([ 
+            Group::make([ 
+                TextInput::make('name')->required(), 
+
+                TextInput::make('sku')->required(), 
+            ])->columns(2), 
+ 
+            MarkdownEditor::make('description') 
+                ->columnSpanFull(), 
+        ]), 
+ 
+Hasil: 
+• Name & SKU dalam 2 kolom 
+• Description full width 
+
+ 
+ 
+     Step 2 – Pricing & Stock 
+    Step::make('Pricing & Stock') 
+        ->description('Isi harga dan jumlah stok') 
+        ->schema([ 
+            TextInput::make('price') 
+                ->numeric() 
+                ->required(), 
+ 
+            TextInput::make('stock') 
+                ->numeric() 
+                ->required(), 
+        ]), 
+ 
+
+ 
+ 
+     Step 3 – Media & Status 
+    Step::make('Media & Status') 
+        ->description('Upload gambar dan atur status') 
+        ->schema([ 
+            FileUpload::make('image') 
+                ->disk('public') 
+                ->directory('products'), 
+ 
+            Checkbox::make('is_active'), 
+ 
+            Checkbox::make('is_featured'), 
+        ]), 
+]) 
+
+ 
+ 
+     E. Menambahkan Tombol Submit 
+Tambahkan method submit action: 
+->submitAction( 
+    Action::make('save') 
+        ->label('Save Product') 
+        ->color('primary') 
+        ->submit('save') 
+) 
+
+ 
+ 
+
+ 
+     F. Menghilangkan Default Button 
+Buka file: CreateProduct.php 
+ 
+• Override method: 
+• protected function getFormActions(): array 
+{ 
+    return []; 
+} 
+ 
+ 
+ 
+
+     G. Tampilan Wizard Form 
+ 
+ 
+
+ 
+ 
+     H. Menambahkan Validasi per Step 
+Contoh: 
+• TextInput::make('name') 
+    ->required(), 
+ 
+TextInput::make('price') 
+    ->numeric() 
+    ->required(), 
+Jika ingin melewati validasi: 
+• ->skippable() 
+ 
+     I. Menampilkan Data pada Table 
+Isikan data terlebih dahulu : 
+
+ 
+Cek pada database 
+ 
+Pada halaman awal  
+ 
+Cara menampikan datanya buka: 
+• ProductsTable.php 
+ 
+
+Tambahkan: 
+• TextColumn::make('name'), 
+TextColumn::make('sku'), 
+TextColumn::make('price'), 
+TextColumn::make('stock'), 
+ 
+ImageColumn::make('image') 
+    ->disk('public'), 
+
+ 
+
+ 
+ 
+  Ilustrasi Tabel Product 
+ 
+ 
+
+ 
+ 
+     J. Pengujian 
+1. Buat produk baru 
+2. Isi Step 1 → klik Next 
+3. Isi Step 2 → klik Next 
+4. Upload gambar di Step 3 
+5. Klik Save Product 
+Cek: 
+• Data tersimpan di database 
+• Gambar tersimpan di storage/app/public/products 
+• Data tampil di tabel 
+ 
+     K. Hasil yang Diharapkan 
+Mahasiswa berhasil: 
+   Membuat Multi Step Form 
+   Mengatur layout dalam setiap Step 
+   Menambahkan validasi 
+   Menampilkan data pada tabel 
+   Mengupload dan menampilkan gambar 
+ 
+     L. Analisis & Diskusi 
+1. Mengapa Wizard Form lebih baik untuk form panjang? 
+2. Kapan kita menggunakan skippable()? 
+3. Apa kelebihan multi step dibanding single form panjang? 
+4. Apakah wizard cocok untuk semua jenis form? 
+ 
+     M. Tugas Praktikum 
+1. Tambahkan icon pada setiap Step 
+2. Tambahkan validasi minimal harga > 0 
+3. Tambahkan badge kolom untuk status aktif di tabel 
+4. Buat minimal 3 produk 
+
+5. Screenshot: 
+o Wizard Step 1 
+o Wizard Step 2 
+o Wizard Step 3 
+o Tabel Product 
+ 
+     N. Kesimpulan 
+Pada pertemuan ini mahasiswa telah mempelajari: 
+• Konsep Wizard Form 
+• Pembagian form menjadi beberapa step 
+• Validasi dalam Wizard 
+• Custom submit action 
+• Implementasi tabel Product 
+ 
