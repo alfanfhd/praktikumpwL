@@ -2,9 +2,9 @@ const fs = require('fs');
 const pdf = require('pdf-parse');
 
 const files = [
-    'c:/laragon/www/praktikumpwl/js8/10.JOBSHEET PRAKTIKUM-TableColumnSorting.pdf',
-    'c:/laragon/www/praktikumpwl/js8/11.JOBSHEET PRAKTIKUM-Implementasi Search & Filter pada Table Filament.pdf',
-    'c:/laragon/www/praktikumpwl/js8/12.JOBSHEET PRAKTIKUM-Implementasi Toggle Column pada Table Filament.pdf'
+    'c:/laragon/www/praktikumpwl/JS10/13.JOBSHEET PRAKTIKUM-Table Actions in Defth.pdf',
+    'c:/laragon/www/praktikumpwl/JS10/14.JOBSHEET PRAKTIKUM-Implementasi Relation pada Filament.pdf',
+    'c:/laragon/www/praktikumpwl/JS10/15.JOBSHEET PRAKTIKUM-Implementasi Many-to-Many Relationship pada Filament.pdf'
 ];
 
 (async () => {

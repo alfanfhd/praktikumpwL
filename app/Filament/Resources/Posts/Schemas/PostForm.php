@@ -36,7 +36,9 @@ class PostForm
                                 ]),
                             Select::make('category_id')
                                 ->label('Category')
-                                ->options(Category::all()->pluck('name', 'id'))
+                                ->relationship('category', 'name')
+                                ->searchable()
+                                ->preload()
                                 ->required(),
                             ColorPicker::make('color'),
                         ])->columns(2),
@@ -54,7 +56,11 @@ class PostForm
                         ]),
                     Section::make('Meta')
                         ->schema([
-                            TagsInput::make('tags'),
+                            Select::make('tags')
+                                ->relationship('tags', 'name')
+                                ->multiple()
+                                ->preload()
+                                ->searchable(),
                             Checkbox::make('published'),
                             DatePicker::make('published_at'),
                         ]),
