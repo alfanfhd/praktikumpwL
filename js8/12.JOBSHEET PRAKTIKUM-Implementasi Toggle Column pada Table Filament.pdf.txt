@@ -1,0 +1,153 @@
+
+
+JOBSHEET PRAKTIKUM 
+Mata Kuliah: Pemrograman Web Lanjut 
+Pertemuan 12 – Implementasi Toggle Column pada Table Filament 
+ 
+       Capaian Pembelajaran 
+Setelah mengikuti praktikum ini, mahasiswa mampu: 
+1. Menambahkan kolom baru pada tabel Filament 
+2. Menggunakan IconColumn untuk boolean 
+3. Mengaktifkan fitur toggleable() pada kolom 
+4. Mengatur kolom agar tersembunyi secara default 
+5. Memahami cara kerja penyimpanan preferensi kolom (session) 
+Framework yang digunakan: 
+Filament 
+ 
+     A. Latar Belakang 
+Pada tabel Post, kita memiliki banyak kolom seperti: 
+• Image 
+• Title 
+• Slug 
+• Category 
+• Created At 
+Namun jika terlalu banyak kolom ditampilkan sekaligus, tabel menjadi penuh dan kurang rapi. 
+Solusinya adalah menggunakan fitur Toggle Column, sehingga: 
+• Kolom bisa disembunyikan sementara 
+• User dapat memilih kolom mana yang ingin ditampilkan 
+• Preferensi tersimpan otomatis 
+ 
+     B. Menambahkan Kolom Baru 
+Buka file: 
+• PostsTable.php 
+ 
+
+  1. Menambahkan Kolom ID 
+• TextColumn::make('id') 
+    ->label('ID'), 
+ 
+ 
+  2. Menambahkan Kolom Tags 
+• TextColumn::make('tags') 
+    ->label('Tags'), 
+ 
+ 
+  3. Menambahkan Kolom Published (Boolean) 
+• use Filament\Tables\Columns\IconColumn; 
+• IconColumn::make('published') 
+    ->boolean() 
+    ->label('Published'), 
+ 
+
+ 
+ 
+     C. Mengaktifkan Toggle Column 
+Tambahkan method: 
+• ->toggleable() 
+Contoh: 
+• TextColumn::make('id') 
+    ->label('ID') 
+    ->toggleable(), 
+ 
+Refresh halaman. 
+ 
+  Hasil 
+ 
+
+ 
+ 
+• Muncul icon pengaturan kolom di kanan atas tabel 
+• User dapat mencentang atau menghilangkan kolom 
+• Klik Apply → Kolom langsung disembunyikan 
+ 
+     D. Menyembunyikan Kolom Secara Default 
+Jika ingin kolom tersembunyi saat pertama kali dibuka: 
+• ->toggleable(isToggledHiddenByDefault: true) 
+Contoh: 
+• TextColumn::make('tags') 
+    ->label('Tags') 
+    ->toggleable(isToggledHiddenByDefault: true), 
+ 
+ 
+  Hasil 
+• Kolom tidak tampil secara default 
+• User dapat mengaktifkannya melalui menu toggle 
+ 
+ 
+
+     E. Penyimpanan Preferensi Kolom 
+Filament otomatis menyimpan: 
+• Kolom yang diaktifkan 
+• Kolom yang disembunyikan 
+Preferensi disimpan dalam session, sehingga saat pindah halaman lalu kembali, konfigurasi tetap 
+tersimpan. 
+ 
+     F. Menerapkan Toggle pada Semua Kolom 
+Contoh lengkap: 
+• TextColumn::make('title') 
+    ->label('Title') 
+    ->toggleable(), 
+ 
+TextColumn::make('slug') 
+    ->label('Slug') 
+    ->toggleable(), 
+ 
+TextColumn::make('category.name') 
+    ->label('Category') 
+    ->toggleable(), 
+ 
+TextColumn::make('id') 
+    ->label('ID') 
+    ->toggleable(isToggledHiddenByDefault: true), 
+ 
+ 
+
+     G. Perbandingan Sebelum & Sesudah 
+Sebelum Sesudah 
+Semua kolom tampil Bisa pilih kolom 
+Tampilan penuh Lebih fleksibel 
+Tidak bisa custom User dapat mengatur sendiri 
+ 
+     H. Hasil yang Diharapkan 
+Mahasiswa berhasil: 
+   Menambahkan kolom ID 
+   Menambahkan kolom Tags 
+   Menambahkan IconColumn untuk Published 
+   Mengaktifkan toggleable() 
+   Menyembunyikan kolom secara default 
+   Memahami penyimpanan preferensi kolom 
+ 
+     I. Latihan Praktikum 
+1. Aktifkan toggleable pada semua kolom 
+2. Sembunyikan minimal 2 kolom secara default 
+3. Uji apakah preferensi tetap tersimpan saat pindah halaman 
+4. Screenshot: 
+o Tampilan sebelum toggle 
+o Menu toggle kolom 
+o Tampilan setelah beberapa kolom disembunyikan 
+ 
+     J. Analisis & Diskusi 
+1. Mengapa toggle column penting pada admin panel? 
+2. Apa perbedaan toggleable() biasa dengan isToggledHiddenByDefault? 
+3. Mengapa preferensi kolom tetap tersimpan? 
+4. Kapan sebaiknya kolom disembunyikan secara default? 
+ 
+     K. Kesimpulan 
+
+Pada pertemuan ini mahasiswa telah mempelajari: 
+• Implementasi Toggle Column 
+• Menyembunyikan kolom default 
+• Penggunaan IconColumn boolean 
+• Manajemen visibilitas kolom 
+Fitur ini sangat berguna untuk sistem dengan banyak data dan kolom dinamis. 
+ 

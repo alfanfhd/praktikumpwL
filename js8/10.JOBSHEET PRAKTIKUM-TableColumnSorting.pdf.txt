@@ -1,0 +1,152 @@
+
+
+JOBSHEET PRAKTIKUM 
+Mata Kuliah: Pemrograman Web Lanjut 
+Pertemuan 10 – Implementasi Sorting (Ascending & Descending) pada Table Filament 
+ 
+       Capaian Pembelajaran 
+Setelah mengikuti praktikum ini, mahasiswa mampu: 
+1. Menambahkan fitur sorting kolom pada tabel Filament 
+2. Menggunakan method sortable() 
+3. Menerapkan sorting pada kolom relasi 
+4. Menerapkan sorting pada kolom tanggal 
+5. Mengatur default sorting tabel 
+Framework yang digunakan: 
+Filament 
+ 
+     A. Latar Belakang 
+Pada modul Post, kita sudah memiliki tabel dengan kolom: 
+• Image 
+• Title 
+• Slug 
+• Category 
+• Created At 
+Namun saat data bertambah banyak, pengguna membutuhkan fitur: 
+• Urut berdasarkan Title (A–Z / Z–A) 
+• Urut berdasarkan Tanggal terbaru 
+• Urut berdasarkan Category 
+Filament menyediakan fitur sorting yang sangat sederhana. 
+ 
+     B. Konsep Sorting di Filament 
+Pada Laravel biasa, sorting membutuhkan: 
+• Query manual 
+• Kondisi orderBy 
+
+• Parameter request 
+Namun di Filament cukup dengan satu method: 
+• ->sortable() 
+ 
+     C. Implementasi Sorting pada Kolom Title 
+Buka file: 
+• PostsTable.php 
+Ubah kolom Title menjadi: 
+• TextColumn::make('title') 
+    ->sortable(), 
+Simpan dan refresh halaman. 
+ 
+ 
+  Hasil 
+ 
+ 
+ 
+ 
+
+Klik header Title: 
+• Klik 1 → Ascending (A–Z) 
+• Klik 2 → Descending (Z–A) 
+ 
+     D. Sorting pada Kolom Slug 
+TextColumn::make('slug') 
+    ->sortable(), 
+Refresh → Kolom Slug bisa diurutkan. 
+ 
+ 
+ 
+     E. Sorting pada Relasi (Category) 
+Jika ingin mengurutkan berdasarkan nama kategori: 
+TextColumn::make('category.name') 
+    ->sortable(), 
+Filament otomatis menangani join relasi. 
+
+ 
+ 
+ 
+     F. Sorting pada Kolom Tanggal 
+Tambahkan kolom: 
+TextColumn::make('created_at') 
+    ->label('Created At') 
+    ->dateTime() 
+    ->sortable(), 
+Hasil: 
+• Bisa diurutkan berdasarkan tanggal terbaru atau terlama. 
+
+ 
+ 
+ 
+     G. Mengatur Default Sorting 
+Jika ingin tabel otomatis urut berdasarkan Title (Ascending): 
+Tambahkan pada konfigurasi table: 
+• ->defaultSort('title', 'asc') 
+Contoh lengkap: 
+• public static function table(Table $table): Table 
+{ 
+    return $table 
+        ->defaultSort('title', 'asc') 
+        ->columns([ 
+            TextColumn::make('title')->sortable(), 
+            TextColumn::make('slug')->sortable(), 
+        ]); 
+} 
+
+ 
+ 
+ 
+     H. Opsi Default Sort Lain 
+
+Opsi Fungsi 
+asc Urut naik (A–Z / 0–9) 
+desc Urut turun (Z–A / 9–0) 
+Contoh: 
+->defaultSort('created_at', 'desc') 
+Artinya: 
+Data terbaru tampil paling atas. 
+ 
+     I. Ringkasan Method Sorting 
+Method Fungsi 
+sortable() Mengaktifkan sorting kolom 
+defaultSort() Mengatur sorting default 
+dateTime() Format tanggal 
+label() Mengubah nama kolom 
+ 
+     J. Hasil yang Diharapkan 
+Mahasiswa berhasil: 
+   Mengaktifkan sortable pada Title 
+   Mengaktifkan sortable pada Slug 
+   Mengaktifkan sortable pada relasi Category 
+   Mengaktifkan sortable pada Created At 
+   Mengatur default sorting 
+ 
+     K. Latihan Praktikum 
+1. Aktifkan sorting pada semua kolom teks 
+2. Buat default sorting berdasarkan Created At descending 
+3. Uji sorting ascending dan descending 
+4. Screenshot: 
+o Sorting Title Asc 
+o Sorting Title Desc 
+o Sorting Date Desc 
+
+ 
+     L. Analisis & Diskusi 
+1. Mengapa sorting penting pada admin panel? 
+2. Apa perbedaan sortable biasa dengan defaultSort()? 
+3. Mengapa relasi tetap bisa di-sort? 
+4. Kapan kita menggunakan desc sebagai default? 
+ 
+     M. Kesimpulan 
+Pada pertemuan ini mahasiswa telah mempelajari: 
+• Implementasi sorting tabel 
+• Sorting relasi database 
+• Sorting kolom tanggal 
+• Default sorting pada Filament 
+Fitur ini sangat penting untuk manajemen data dalam skala besar. 
+ 

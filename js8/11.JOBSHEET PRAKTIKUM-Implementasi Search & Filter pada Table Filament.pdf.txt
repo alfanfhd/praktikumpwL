@@ -1,0 +1,149 @@
+
+
+JOBSHEET PRAKTIKUM 
+Mata Kuliah: Pemrograman Web Lanjut 
+Pertemuan 11 – Implementasi Search & Filter pada Table Filament 
+ 
+       Capaian Pembelajaran 
+Setelah mengikuti praktikum ini, mahasiswa mampu: 
+1. Menambahkan fitur Search (Pencarian) pada tabel 
+2. Menggunakan method searchable() 
+3. Membuat filter berdasarkan tanggal (Date Filter) 
+4. Membuat filter berdasarkan relasi (Select Filter) 
+5. Menambahkan query custom pada filter 
+6. Menggabungkan fitur Search dan Filter secara bersamaan 
+Framework yang digunakan: 
+Filament 
+ 
+     A. Latar Belakang 
+Pada pertemuan sebelumnya kita telah menambahkan sorting pada tabel Post. 
+Namun dalam sistem yang memiliki banyak data, pengguna juga membutuhkan: 
+•     Pencarian berdasarkan teks (title, slug, kategori) 
+•              Filter berdasarkan tanggal 
+•    Filter berdasarkan kategori 
+Filament menyediakan fitur tersebut dengan sangat sederhana. 
+ 
+     B. Menambahkan Search pada Kolom 
+Buka file: 
+• PostsTable.php 
+Tambahkan method searchable() pada kolom yang ingin dicari. 
+ 
+  Search pada Title 
+TextColumn::make('title') 
+    ->searchable(), 
+
+Simpan dan refresh halaman. 
+ 
+ 
+ 
+  Search pada Slug 
+TextColumn::make('slug') 
+    ->searchable(), 
+
+ 
+ 
+ 
+  Search pada Relasi Category 
+TextColumn::make('category.name') 
+    ->searchable(), 
+
+ 
+ 
+ 
+  Hasil 
+• Search bar muncul otomatis di atas tabel 
+• Bisa mencari berdasarkan Title, Slug, dan Category 
+• Hasil tampil secara real-time 
+ 
+     C. Membuat Filter Berdasarkan Tanggal 
+Search cocok untuk teks, tetapi tidak efektif untuk tanggal. 
+Solusinya: gunakan Filter. 
+ 
+
+  Tambahkan Filter Created At 
+• use Filament\Tables\Filters\Filter; 
+use Filament\Forms\Components\DatePicker; 
+• Kemudian di method filters(): 
+• Filter::make('created_at') 
+    ->label('Creation Date') 
+    ->schema([ 
+        DatePicker::make('created_at') 
+            ->label('Select Date'), 
+    ]) 
+ 
+
+ 
+  Menambahkan Query Logic 
+Agar filter benar-benar bekerja, tambahkan: 
+• ->query(function ($query, $data) { 
+    return $query->when( 
+        $data['created_at'], 
+        fn ($query, $date) => $query->whereDate('created_at', $date) 
+    ); 
+}) 
+ 
+ 
+
+  Cara Menguji 
+1. Klik icon filter di tabel 
+2. Pilih tanggal 
+3. Klik Apply 
+4. Data akan terfilter sesuai tanggal 
+ 
+ 
+     D. Membuat Filter Berdasarkan Relasi (Kategori) 
+Gunakan SelectFilter: 
+• use Filament\Tables\Filters\SelectFilter; 
+Tambahkan: 
+• SelectFilter::make('category_id') 
+    ->label('Select Category') 
+    ->relationship('category', 'name') 
+    ->preload(), 
+ 
+
+ 
+  Hasil 
+• Dropdown kategori muncul di filter 
+• Data otomatis difilter berdasarkan kategori yang dipilih 
+ 
+ 
+     E. Perbandingan Search vs Filter 
+Search Filter 
+Untuk teks Untuk kondisi spesifik 
+Real-time Berdasarkan form input 
+Cocok untuk title/slug Cocok untuk tanggal & relasi 
+ 
+     F. Hasil yang Diharapkan 
+Mahasiswa berhasil: 
+   Menambahkan search pada Title 
+   Menambahkan search pada Slug 
+   Menambahkan search pada Category 
+   Membuat filter tanggal 
+   Membuat filter kategori 
+   Menggunakan query custom pada filter 
+ 
+     G. Latihan Praktikum 
+1. Aktifkan search pada minimal 3 kolom 
+2. Buat filter tanggal Created At 
+
+3. Buat filter kategori menggunakan SelectFilter 
+4. Uji kombinasi Search + Filter 
+5. Screenshot: 
+o Search Title 
+o Filter Tanggal 
+o Filter Kategori 
+ 
+     H. Analisis & Diskusi 
+1. Mengapa search tidak cocok untuk filter tanggal? 
+2. Apa fungsi relationship() pada SelectFilter? 
+3. Mengapa kita perlu whereDate() pada query filter? 
+4. Apa perbedaan searchable() dan filters()? 
+ 
+     I. Kesimpulan 
+Pada pertemuan ini mahasiswa telah mempelajari: 
+• Implementasi Search pada table Filament 
+• Implementasi Filter berbasis DatePicker 
+• Implementasi Filter berbasis Relasi 
+• Custom query filtering 
+• Penggabungan Search dan Filter 
+ 
